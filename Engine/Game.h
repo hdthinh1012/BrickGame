@@ -29,7 +29,6 @@
 #include "Brick.h"
 #include "Colors.h"
 #include "FrameTimer.h"
-#include "SpriteCodex.h"
 
 class Game
 {
@@ -58,6 +57,5 @@ private:
     bool isOver = false;
     static constexpr int brickRow = 4;
     static constexpr int brickCol = 16;
-    int lives = 3;
 	/********************************/
 };
