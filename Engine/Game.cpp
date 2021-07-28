@@ -80,6 +80,10 @@ void Game::Go()
 			UpdateModel(delta_time * 60.0f);
 		}
 	}
+	else
+	{
+		SpriteCodex::DrawGameOver(Vec2(300.0f,250.0f), gfx);
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
@@ -91,7 +95,18 @@ void Game::UpdateModel(const float dt)
 	static bool IsCollisionHappened;
 	paddle.Update(gfx, wnd, dt);
 	ball.Update(wnd, dt);
-	isOver = ball.DoWallCollision(wall, paddle);
+	if (ball.DoWallCollision(wall, paddle))
+	{
+		if (lives > 1)
+		{
+			lives--;
+		}
+		else
+		{
+			lives--;
+			isOver = true;
+		}
+	}
 	ball.DoPaddleCollision(paddle, 0);
 
 	IsCollisionHappened = false;
@@ -116,6 +131,10 @@ void Game::UpdateModel(const float dt)
 
 void Game::ComposeFrame()
 {
+	for (int i = 0; i <= lives - 1; i++)
+	{
+		SpriteCodex::DrawPoo(Vec2(20.0f,20.0f) + Vec2(20.0f * i, 0.0f), gfx);
+	}
 	wall.DrawBorderOutside(gfx, Colors::LightGray);
 	paddle.Draw(gfx);
 	ball.Draw(gfx);
